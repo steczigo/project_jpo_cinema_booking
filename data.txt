@@ -1,0 +1,4 @@
+Blue_room<--->Avengers<--->150<--->scifi<--->13:00<--->Monday
+Blue_room<--->Avengers<--->150<--->scifi<--->17:00<--->Monday
+Red_room<--->Frozen2<--->90<--->animated<--->13:00<--->Monday
+  
