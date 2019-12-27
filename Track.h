@@ -16,6 +16,7 @@ public:
 	std::string get_room() const;
 	std::string get_movie() const;
 	std::string get_time() const;
+	std::string get_day() const;
 	// functions
 	void print_info();
 

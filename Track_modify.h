@@ -4,6 +4,7 @@
 
 #include "Movie.h"
 #include "Room.h"
+#include "Track.h"
 
 class Track_modify
 {
@@ -23,6 +24,7 @@ public:
 	void print_info();
 	// operators
 	Track_modify& operator=(const Track_modify& a_track);
+	Track_modify& operator=(const Track& a_track);
 
 private:
 	Room room;

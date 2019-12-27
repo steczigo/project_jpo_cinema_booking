@@ -27,3 +27,7 @@ std::string Track::get_time() const
 {
 	return time;
 }
+std::string Track::get_day() const
+{
+	return day;
+}
