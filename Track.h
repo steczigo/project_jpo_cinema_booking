@@ -14,7 +14,8 @@ public:
 	~Track() {}
 	// getters
 	std::string get_room() const;
-	std::string get_movie() const;
+	Movie get_movie() const;
+	std::string get_movie_title() const;
 	std::string get_time() const;
 	std::string get_day() const;
 	// functions

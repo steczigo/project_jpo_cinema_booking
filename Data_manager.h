@@ -33,6 +33,8 @@ public:
 	void choose_title(std::vector<Movie>& movie_titles, Movie& chosen_movie);
 	unsigned int choose_time(std::vector<Track>& tracks, Movie& chosen_movie, Track_modify& chosen_track, unsigned int & number);
 	void choose_seat(std::vector<Seat>& seats, unsigned int number, std::vector<unsigned int>& chosen_seats);
+	void manage_order(User& user);
+	void print_track(std::vector<Track>& tracks);
 
 private:
 

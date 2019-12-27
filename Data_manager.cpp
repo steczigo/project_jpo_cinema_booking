@@ -110,7 +110,7 @@ unsigned int Data_manager::choose_time(std::vector<Track>& tracks, Movie& chosen
             cout << "============================================" << endl;
             for (auto title : tracks)
             {
-                if (title.get_movie() == chosen_movie.get_title())
+                if (title.get_movie_title() == chosen_movie.get_title())
                 {
                     title.print_info();
                     cout << "============================================" << endl;
@@ -126,7 +126,7 @@ unsigned int Data_manager::choose_time(std::vector<Track>& tracks, Movie& chosen
             for (auto title : tracks)
             {
                 i++;
-                if (title.get_movie() == chosen_movie.get_title())  // firstly i check which titles match
+                if (title.get_movie_title() == chosen_movie.get_title())  // firstly i check which titles match
                 {
                     if (cin_time == title.get_time())               // secondly i check if cin_time matches any time in track
                     {
@@ -278,5 +278,75 @@ void Data_manager::choose_seat(std::vector<Seat>& seats, unsigned int number, st
             break;
         }
         }
+    }
+}
+
+
+/*=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=*/
+
+
+void Data_manager::manage_order(User& user)
+{
+    while (1)
+    {
+        if (user.order_empty())
+        {
+            cout << "============================================" << endl;
+            cout << "No orders yet" << endl;
+            cout << "============================================" << endl;
+            break;
+        }
+        else
+        {
+            user.print_order();
+            cout << "<............................................>" << endl;
+            cout << "If you would like to exit, choose '0'" << endl;    // can use 0 here because order numbers are printed as 1,2,3...
+            cout << "If you would like to remove an order, enter a corresponding order number:" << endl;
+            cout << "<............................................>" << endl;
+            string switcher;
+            cin >> switcher;
+            if (stoi(switcher) == 0)
+            {
+                break; // case break
+            }
+            int int_switcher = stoi(switcher);
+            int order_amount = user.order_amount();
+            for (int i = 0; i < order_amount; i++)
+            {
+                if ((int_switcher - 1) == i)      // has to be -1 because user types order_number (as switcher) as 1 above actual position in vector
+                {
+                    user.print_order();
+                    user.remove_order(int_switcher);
+                    user.print_order();
+                    break;
+                }
+                else if (i < order_amount)
+                {
+                    continue;
+                }
+                else
+                {
+                    cout << "=== CAN'T ERASE ===" << endl;
+                    cout << "=== choose appropriate order number ===" << endl;
+                    break;
+                }
+            }
+            break;  // while break
+        }
+    }
+}
+
+
+/*=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=*/
+
+
+void Data_manager::print_track(std::vector<Track>& tracks)
+{
+    cout << "The current movies are: " << endl << "============================================" << endl;
+
+    for (int i = 0; i < tracks.size(); i++)
+    {
+        tracks[i].print_info();
+        cout << "============================================" << endl;
     }
 }

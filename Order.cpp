@@ -1,19 +1,23 @@
 #include "Order.h"
 
-Order::Order(std::vector<unsigned int> a_seat, Track a_track) : track(a_track)
+Order::Order(std::vector<unsigned int> a_seat, Track_modify a_track)
 {
 	for (auto seat : a_seat)
 	{
 		seats.push_back(seat);
 		
 	}
+	track.push_back(a_track);
 }
 
 void Order::print_order() 
 {
-	std::cout << "============================================" << std::endl;
-	std::cout << "YOUR ORDER IS ----->" << std::endl;
-	track.print_info();
+	for (auto order : track)
+	{
+		std::cout << "============================================" << std::endl;
+		std::cout << "YOUR ORDER IS ----->" << std::endl;
+		order.print_info();
+	}
 	std::cout << "Your seats are: ";
 	for (auto seat : seats)
 	{

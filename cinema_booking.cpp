@@ -4,7 +4,7 @@
 
 int main()
 {
-    // here all Room, Movie and Track objects will be constructed ==========
+    // here all Room, Movie, Track and Seat objects will be constructed ==========
 
     vector<Room> room_names;
     vector<Movie> movie_titles;
@@ -12,7 +12,7 @@ int main()
     vector<Seat> seats;
     unsigned int number = 0;        // value is 0 just to make sure functions work when using number as a parameter
 
-    User user;
+    User user;  // constructing user
 
     Data_manager data_manager;   
     data_manager.fill_data(room_names, movie_titles, tracks, seats, "data.txt");
@@ -27,25 +27,19 @@ int main()
         cout << "0 - exit" << endl;
         cout << "1 - list all movies to be displayed" << endl;
         cout << "2 - order (choose seats and movie)" << endl;
-        cout << "3 - Display order" << endl;                            // DOROBIC CASE 3 !!!!!!!!!!!!!!!!!!!!!!
+        cout << "3 - display order" << endl;
         cout << "<............................................>" << endl;
         string choice;
         cin >> choice;
   
         if (stoi(choice) == 0)
-            break;
+            break;  // while loop break
         switch (stoi(choice))
         {
             case 1:
             {
-                cout << "The current movies are: " << endl << "============================================" << endl;
-            
-                for (int i = 0; i < tracks.size(); i++)
-                {
-                    tracks[i].print_info();
-                    cout << "============================================" << endl;
-                } 
-                break;
+                data_manager.print_track(tracks);
+                break;      // case break
             }
             case 2:
             {
@@ -58,20 +52,24 @@ int main()
                 data_manager.choose_time(tracks, chosen_movie, chosen_track, number);                   // user chooses time here
 
                 vector<unsigned int> chosen_seats;    // a seat numbers that user will choose
-                data_manager.choose_seat(seats, number, chosen_seats);
+                data_manager.choose_seat(seats, number, chosen_seats);      // user chooses seats here
 
-
-
+                Order chosen_order(chosen_seats, chosen_track);     // user's order will be stored here
+                user.place_order(chosen_order);     // user places order here
 
                 break;          // case break
+            }
+            case 3:
+            {
+                data_manager.manage_order(user);    // user can see orders and remove them here
+                break;      // case break
             }
             default:
             {
                 cout << "===please choose an appropriate number===" << endl;
-                break;
+                break;      // case break
             }
         }
     }
-
     return 0;
 }

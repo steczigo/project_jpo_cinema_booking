@@ -15,7 +15,7 @@ public:
 	~Track_modify() {}
 	// getters
 	std::string get_room() const;
-	std::string get_movie() const;
+	std::string get_movie_title() const;
 	std::string get_time() const;
 	// setters
 	void set_room(std::string new_room);
