@@ -26,7 +26,7 @@ bool Data_manager::fill_data(std::vector<Room>& room_names, std::vector<Movie>& 
 
         for (int i = 0; i < data_size; i++)
         {
-            // here I will use boost::split to help construct all needed objects
+            // here I will use boost::split to divide strings and construct all needed objects
             split(after_split_data_container, raw_file_data[i], is_any_of("<--->"), token_compress_on);
             if (after_split_data_container.size() != 6)     // the reason for 6 is right in the above comments, usually to prevent white marks from crashing the file read
             {
@@ -144,7 +144,7 @@ unsigned int Data_manager::choose_time(std::vector<Track>& tracks, Movie& chosen
                         continue;
                     }
                 }
-                number++;
+                number++;   // incrementing here to show the tracks[number] will be tracks[number+1] before next loop pass
             }
             if (chosen_track.get_time() != "time")      // if time has been set, then we leave the while loop
             {
@@ -212,7 +212,6 @@ void Data_manager::choose_seat(std::vector<Seat>& seats, unsigned int number, st
             }
             else
             {
-                const int chosen_seats_size = chosen_seats.size();
                 for (auto seats : chosen_seats)
                 {
                     cout << seats << ", ";
@@ -224,16 +223,15 @@ void Data_manager::choose_seat(std::vector<Seat>& seats, unsigned int number, st
         }
         case 3:
         {
-            cout << "============================================" << endl;
-            cout << "Your booked seats are: " << endl;
             if (chosen_seats.empty())
             {
-                cout << "CAN'T REMOVE, no seats are booked yet..." << endl;
-                cout << "============================================" << endl;
+                cout << "=== CAN'T REMOVE, no seats are booked yet... ===" << endl;
                 break;
             }
             else
             {
+                cout << "============================================" << endl;
+                cout << "Your booked seats are: " << endl;
                 for (auto seats : chosen_seats)
                 {
                     cout << seats << ", ";
@@ -255,10 +253,6 @@ void Data_manager::choose_seat(std::vector<Seat>& seats, unsigned int number, st
                         cout << "Your seat number " << seat_to_remove << " has been removed" << endl;
                         break;
                     }
-                    /*else if (i < chosen_seats_size)
-                    {
-                        break;
-                    }*/
                     else if (seat_to_remove != chosen_seats[i])
                     {
                         cout << "===You didnt book this seat, please type suitable number===" << endl;
@@ -273,7 +267,7 @@ void Data_manager::choose_seat(std::vector<Seat>& seats, unsigned int number, st
             break;
         }
         }
-        if (stoi(switcher) == 0)
+        if (stoi(switcher) == 0)        // checking here just to make sure everything works
         {
             break;
         }
@@ -307,7 +301,7 @@ void Data_manager::manage_order(User& user)
             cin >> switcher;
             if (stoi(switcher) == 0)
             {
-                break; // case break
+                break; // while break
             }
             int int_switcher = stoi(switcher);
             int order_amount = user.order_amount();
