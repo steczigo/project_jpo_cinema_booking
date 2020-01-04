@@ -19,7 +19,7 @@ std::string Track_modify::get_room() const
 {
 	return room.get_room_name();
 }
-std::string Track_modify::get_movie() const
+std::string Track_modify::get_movie_title() const
 {
 	return movie.get_title();
 }
@@ -45,5 +45,14 @@ Track_modify& Track_modify::operator=(const Track_modify& a_track)
 	movie = a_track.movie;
 	time = a_track.time;
 	day = a_track.day;
+	return *this;
+}
+
+Track_modify& Track_modify::operator=(const Track& a_track)
+{
+	room = a_track.get_room();
+	movie = a_track.get_movie();
+	time = a_track.get_time();
+	day = a_track.get_day();
 	return *this;
 }

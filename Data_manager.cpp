@@ -97,6 +97,7 @@ void Data_manager::choose_title(std::vector<Movie>& movie_titles, Movie& chosen_
 
 /*=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=*/
 
+
 // number ---> tracks are contained in vector, so every Seat set is assigned to corresponding tracks[number]
 //              so returns number in order to further use it to choose vector Seat[number] corresponding to vector Track[number] 
 unsigned int Data_manager::choose_time(std::vector<Track>& tracks, Movie& chosen_movie, Track_modify& chosen_track, unsigned int & number)
@@ -109,7 +110,7 @@ unsigned int Data_manager::choose_time(std::vector<Track>& tracks, Movie& chosen
             cout << "============================================" << endl;
             for (auto title : tracks)
             {
-                if (title.get_movie() == chosen_movie.get_title())
+                if (title.get_movie_title() == chosen_movie.get_title())
                 {
                     title.print_info();
                     cout << "============================================" << endl;
@@ -125,7 +126,7 @@ unsigned int Data_manager::choose_time(std::vector<Track>& tracks, Movie& chosen
             for (auto title : tracks)
             {
                 i++;
-                if (title.get_movie() == chosen_movie.get_title())  // firstly i check which titles match
+                if (title.get_movie_title() == chosen_movie.get_title())  // firstly i check which titles match
                 {
                     if (cin_time == title.get_time())               // secondly i check if cin_time matches any time in track
                     {
@@ -151,4 +152,201 @@ unsigned int Data_manager::choose_time(std::vector<Track>& tracks, Movie& chosen
             }
         }
         return number;
+}
+
+
+/*=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=*/
+
+
+// number ---> tracks are contained in vector, so every Seat set is assigned to corresponding tracks[number]
+// number is returned from Data_manager::choose_time, so in order to use choose_seat you should first use choose_time
+// no comments needed in function --- couts are self explanatory
+void Data_manager::choose_seat(std::vector<Seat>& seats, unsigned int number, std::vector<unsigned int>& chosen_seats)
+{
+    while (1)
+    {
+        cout << "<............................................>" << endl;
+        cout << "Choose from menu below:" << endl;
+        cout << "0. exit" << endl;
+        cout << "1. Book a seat or another seat" << endl;
+        cout << "2. Check your booked seats" << endl;
+        cout << "3. Remove booked seat" << endl;
+        cout << "<............................................>" << endl;
+        string switcher;
+        cin >> switcher;
+        if (stoi(switcher) == 0)
+        {
+            break;
+        }
+        switch (stoi(switcher))
+        {
+        case 1:
+        {
+            cout << "Please choose a suitable seat from:" << endl;
+            seats[number].print_free_seat();
+            cout << "Enter the seat number:" << endl;
+            unsigned int seat_choice;
+            cin >> seat_choice;
+            if (seats[number].is_occupied(seat_choice))
+            {
+                cout << "You have chosen seat number: " << seat_choice << endl;
+                chosen_seats.push_back(seat_choice);
+                seats[number].change_to_occupied(seat_choice);
+                break;
+            }
+            else
+            {
+                cout << "===This seat is already occupied, please choose another one===" << endl;
+                break;
+            }
+        }
+        case 2:
+        {
+            cout << "============================================" << endl;
+            cout << "Your booked seats are: " << endl;
+            if (chosen_seats.empty())
+            {
+                cout << "no seats are booked yet..." << endl;
+                cout << "============================================" << endl;
+                break;
+            }
+            else
+            {
+                const int chosen_seats_size = chosen_seats.size();
+                for (auto seats : chosen_seats)
+                {
+                    cout << seats << ", ";
+                }
+                cout << endl;
+                cout << "============================================" << endl;
+                break;
+            }
+        }
+        case 3:
+        {
+            cout << "============================================" << endl;
+            cout << "Your booked seats are: " << endl;
+            if (chosen_seats.empty())
+            {
+                cout << "CAN'T REMOVE, no seats are booked yet..." << endl;
+                cout << "============================================" << endl;
+                break;
+            }
+            else
+            {
+                for (auto seats : chosen_seats)
+                {
+                    cout << seats << ", ";
+                }
+                cout << endl;
+                cout << "============================================" << endl;
+
+                unsigned int seat_to_remove;
+                cout << "Please enter number of the seat you would like to remove: " << endl;
+                cin >> seat_to_remove;
+                const int chosen_seats_size = chosen_seats.size();
+                auto seat_iterator = chosen_seats.begin();      // declared here to prevent using begin() over and over in 'for' loop
+                for (auto i = 0; i < chosen_seats_size; i++)
+                {
+                    if (seat_to_remove == chosen_seats[i])
+                    {
+                        chosen_seats.erase(seat_iterator + i);
+                        seats[number].change_to_unoccupied(seat_to_remove);
+                        cout << "Your seat number " << seat_to_remove << " has been removed" << endl;
+                        break;
+                    }
+                    /*else if (i < chosen_seats_size)
+                    {
+                        break;
+                    }*/
+                    else if (seat_to_remove != chosen_seats[i])
+                    {
+                        cout << "===You didnt book this seat, please type suitable number===" << endl;
+                        break;
+                    }
+                }
+                break;
+            }
+        default:
+        {
+            cout << "something went wrong..." << endl;
+            break;
+        }
+        }
+        if (stoi(switcher) == 0)
+        {
+            break;
+        }
+        }
+    }
+}
+
+
+/*=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=*/
+
+
+void Data_manager::manage_order(User& user)
+{
+    while (1)
+    {
+        if (user.order_empty())
+        {
+            cout << "============================================" << endl;
+            cout << "No orders yet" << endl;
+            cout << "============================================" << endl;
+            break;
+        }
+        else
+        {
+            user.print_order();
+            cout << "<............................................>" << endl;
+            cout << "If you would like to exit, choose '0'" << endl;    // can use 0 here because order numbers are printed as 1,2,3...
+            cout << "If you would like to remove an order, enter a corresponding order number:" << endl;
+            cout << "<............................................>" << endl;
+            string switcher;
+            cin >> switcher;
+            if (stoi(switcher) == 0)
+            {
+                break; // case break
+            }
+            int int_switcher = stoi(switcher);
+            int order_amount = user.order_amount();
+            for (int i = 0; i < order_amount; i++)
+            {
+                if ((int_switcher - 1) == i)      // has to be -1 because user types order_number (as switcher) as 1 above actual position in vector
+                {
+                    user.print_order();
+                    user.remove_order(int_switcher);
+                    user.print_order();
+                    break;
+                }
+                else if (i < order_amount)
+                {
+                    continue;
+                }
+                else
+                {
+                    cout << "=== CAN'T ERASE ===" << endl;
+                    cout << "=== choose appropriate order number ===" << endl;
+                    break;
+                }
+            }
+            break;  // while break
+        }
+    }
+}
+
+
+/*=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=*/
+
+
+void Data_manager::print_track(std::vector<Track>& tracks)
+{
+    cout << "The current movies are: " << endl << "============================================" << endl;
+
+    for (int i = 0; i < tracks.size(); i++)
+    {
+        tracks[i].print_info();
+        cout << "============================================" << endl;
+    }
 }

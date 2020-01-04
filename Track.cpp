@@ -19,11 +19,19 @@ std::string Track::get_room() const
 {
 	return room.get_room_name();
 }
-std::string Track::get_movie() const
+Movie Track::get_movie() const
+{
+	return movie;
+}
+std::string Track::get_movie_title() const
 {
 	return movie.get_title();
 }
 std::string Track::get_time() const
 {
 	return time;
+}
+std::string Track::get_day() const
+{
+	return day;
 }
