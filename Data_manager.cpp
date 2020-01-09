@@ -130,8 +130,51 @@ unsigned int Data_manager::choose_time(std::vector<Track>& tracks, Movie& chosen
                 {
                     if (cin_time == title.get_time())               // secondly i check if cin_time matches any time in track
                     {
-                        chosen_track.set_room(title.get_room());    // chosen room name being assigned
-                        chosen_track.set_time(title.get_time());    // chosen time being assigned
+                        while (1)
+                        {
+                            chosen_track.set_room(title.get_room());    // chosen room name being assigned
+                            chosen_track.set_time(title.get_time());    // chosen time being assigned
+                            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                            // BLOCK FOR DAY CHOICE (should be before time choice but whatever)
+                            std::cout << "The upcoming projections will take place on: " << std::endl;
+                            std::cout << "============================================" << std::endl;
+                            for (auto day : tracks)
+                            {
+                                if (day.get_time() == chosen_track.get_time())
+                                {
+                                    std::cout << day.get_day() << ", ";
+                                }
+                            }
+                            std::cout << std::endl;
+                            std::cout << "============================================" << std::endl;
+                            cout << "Please choose day from list above by writing it:" << endl;
+                            std::string cin_day;
+                            std::cin >> cin_day;
+                            int j = 0;              // will be used for maintaining while loop conditions
+                            for (auto day : tracks)
+                            {
+                                j++;
+                                if (cin_day == day.get_day())               // secondly i check if cin_day matches any day in track
+                                {
+                                    chosen_track.set_day(day.get_day());    // chosen day being assigned
+                                    break;
+                                }
+                                else if (j >= tracks_size - 1)
+                                {
+                                    cout << "None of the days match the one you entered: \"" << cin_day << "\", try again ------" << endl;
+                                    break;
+                                }
+                                else if (cin_day != day.get_day())
+                                {
+                                    continue;
+                                }
+                            }
+                            if (chosen_track.get_day() != "day")      // if day has been set, then we leave the while loop
+                            {
+                                break;  // breaks the whole while loop if user typed database-matching day
+                            }
+                        }
+                        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                         break;
                     }
                     else if (i >= tracks_size - 1)

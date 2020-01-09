@@ -17,9 +17,11 @@ public:
 	std::string get_room() const;
 	std::string get_movie_title() const;
 	std::string get_time() const;
+	std::string get_day() const;
 	// setters
 	void set_room(std::string new_room);
 	void set_time(std::string new_time);
+	void set_day(std::string new_day);
 	// functions
 	void print_info();
 	// operators

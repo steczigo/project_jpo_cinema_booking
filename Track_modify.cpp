@@ -27,6 +27,10 @@ std::string Track_modify::get_time() const
 {
 	return time;
 }
+std::string Track_modify::get_day() const
+{
+	return day;
+}
 
 
 void Track_modify::set_room(std::string new_room)
@@ -37,6 +41,11 @@ void Track_modify::set_time(std::string new_time)
 {
 	time = new_time;
 }
+void Track_modify::set_day(std::string new_day)
+{
+	day = new_day;
+}
+
 
 
 Track_modify& Track_modify::operator=(const Track_modify& a_track)
