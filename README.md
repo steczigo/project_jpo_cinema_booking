@@ -5,5 +5,5 @@ Just a cinema ticket booking project for college Object Oriented Programming
 
 09.01.2019 final (?) version 
 - no GUI ( :< no time )
-- many features missing like basic error handlers ( again, no time )
+- many features missing like a few basic error handlers ( again, no time )
 - works fine
