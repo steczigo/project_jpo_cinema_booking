@@ -88,9 +88,11 @@ void Data_manager::choose_title(std::vector<Movie>& movie_titles, Movie& chosen_
         if (chosen_movie.get_title() == "title")
         {
             cout << "None of the titles match the one you entered: \"" << cin_title << "\", try again ------" << endl;
-            break;
         }
-        break;      // breaks the whole while loop if user typed database-matching title
+        if (chosen_movie.get_title() == cin_title)
+        {
+            break;  // breaks the whole while loop if user typed database-matching title
+        }      
     }
 }
 
@@ -210,7 +212,7 @@ void Data_manager::choose_seat(std::vector<Seat>& seats, unsigned int number, st
     {
         cout << "<............................................>" << endl;
         cout << "Choose from menu below:" << endl;
-        cout << "0. exit" << endl;
+        cout << "0. Go back" << endl;
         cout << "1. Book a seat or another seat" << endl;
         cout << "2. Check your booked seats" << endl;
         cout << "3. Remove booked seat" << endl;
@@ -310,10 +312,10 @@ void Data_manager::choose_seat(std::vector<Seat>& seats, unsigned int number, st
             break;
         }
         }
-        if (stoi(switcher) == 0)        // checking here just to make sure everything works
-        {
-            break;
-        }
+        //if (stoi(switcher) == 0)        // checking here just to make sure everything works
+        //{
+        //    break;
+        //}
         }
     }
 }
@@ -337,7 +339,7 @@ void Data_manager::manage_order(User& user)
         {
             user.print_order();
             cout << "<............................................>" << endl;
-            cout << "If you would like to exit, choose '0'" << endl;    // can use 0 here because order numbers are printed as 1,2,3...
+            cout << "If you would like to go back, choose '0'" << endl;    // can use 0 here because order numbers are printed as 1,2,3...
             cout << "If you would like to remove an order, enter a corresponding order number:" << endl;
             cout << "<............................................>" << endl;
             string switcher;

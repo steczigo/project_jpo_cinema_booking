@@ -10,7 +10,7 @@ int main()
     vector<Movie> movie_titles;
     vector<Track> tracks;
     vector<Seat> seats;
-    unsigned int number = 0;        // value is 0 just to make sure functions work when using number as a parameter
+    unsigned int number = 0;        // value is set just to make sure functions work when using number as a parameter
 
     User user;  // constructing user
 
